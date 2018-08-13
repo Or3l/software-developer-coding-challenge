@@ -45,4 +45,12 @@ public class BidController {
         return auction.getBids();
     }
 
+    @GetMapping("/winningBid")
+    public Bid findWinningBidForGivenItem(@RequestParam("itemId") long id){
+        Auction auction = auctionService.findAuctionByItem(id);
+        return auction.getTopBid();
+    }
+
+
+
 }
