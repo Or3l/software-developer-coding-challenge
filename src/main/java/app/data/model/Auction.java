@@ -1,7 +1,6 @@
-package app.model;
+package app.data.model;
 
-import java.util.Set;
-import java.util.UUID;
+import java.util.List;
 
 public interface Auction {
 
@@ -11,11 +10,11 @@ public interface Auction {
 
     void setTopBid(Bid bid);
 
-    Set<Bid> getBids();
+    List<Bid> getBids();
 
     double getReservePrice();
 
-    UUID getAuctionId();
+    long getAuctionId();
 
 
 }

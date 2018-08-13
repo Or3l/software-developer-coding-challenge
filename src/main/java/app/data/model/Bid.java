@@ -1,11 +1,34 @@
-package app.model;
+package app.data.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.*;
 import java.util.Objects;
 
+@Entity
 public class Bid implements Comparable<Bid> {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long bidId;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
     private User user;
     private double amount;
+
+    @ManyToOne(targetEntity = AuctionImpl.class,fetch = FetchType.LAZY)
+    @JoinColumn(name = "auction_id")
+    @JsonIgnore
+    private Auction auction;
+
+    public Auction getAuction() {
+        return auction;
+    }
+
+    public void setAuction(Auction auction) {
+        this.auction = auction;
+    }
 
     public User getUser() {
         return user;
@@ -28,6 +51,10 @@ public class Bid implements Comparable<Bid> {
         this.amount = amount;
     }
 
+    public Bid(){
+
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -45,5 +72,9 @@ public class Bid implements Comparable<Bid> {
     @Override
     public int compareTo(Bid o) {
         return Double.compare(this.amount, o.amount);
+    }
+
+    public long getBidId() {
+        return bidId;
     }
 }

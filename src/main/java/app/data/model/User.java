@@ -1,16 +1,32 @@
-package app.model;
+package app.data.model;
 
+import javax.persistence.*;
+import java.util.Set;
+
+@Entity
+@Table(name="user")
 public class User {
 
-    private String userId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long userId;
     private String firstName;
     private String lastName;
 
-    public String getUserId() {
+    @OneToMany(
+            fetch = FetchType.LAZY,
+            mappedBy = "user",
+            cascade = CascadeType.ALL
+    )
+    private Set<Bid> bids;
+
+
+
+    public long getUserId() {
         return userId;
     }
 
-    public void setUserId(String userId) {
+    public void setUserId(long userId) {
         this.userId = userId;
     }
 
@@ -30,9 +46,12 @@ public class User {
         this.lastName = lastName;
     }
 
-    public User(String userId, String firstName, String lastName) {
-        this.userId = userId;
+    public User(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
+    }
+
+    public User(){
+
     }
 }

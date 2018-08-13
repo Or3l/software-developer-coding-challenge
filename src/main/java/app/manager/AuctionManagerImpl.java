@@ -3,14 +3,13 @@ package app.manager;
 import app.exception.AuctionAlreadyExistException;
 import app.exception.AuctionDoesNotExistException;
 import app.exception.InsufficientAmountException;
-import app.model.Auction;
-import app.model.AuctionImpl;
-import app.model.Bid;
-import app.model.Item;
+import app.data.model.Auction;
+import app.data.model.AuctionImpl;
+import app.data.model.Bid;
+import app.data.model.Item;
 
+import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class AuctionManagerImpl implements AuctionManager {
@@ -50,7 +49,7 @@ public class AuctionManagerImpl implements AuctionManager {
     }
 
     @Override
-    public Set<Bid> getAllBids(Item item) {
+    public List<Bid> getAllBids(Item item) {
         return itemAuctionMap.get(item).getBids();
     }
 
@@ -68,7 +67,7 @@ public class AuctionManagerImpl implements AuctionManager {
         if(itemAuctionMap.get(item) != null){
             throw new AuctionAlreadyExistException("An auction already exists for that item");
         }
-        Auction auction =  new AuctionImpl(item, UUID.randomUUID(), reservePrice);
+        Auction auction =  new AuctionImpl(item, reservePrice);
         itemAuctionMap.put(item, auction);
         return auction;
     }
