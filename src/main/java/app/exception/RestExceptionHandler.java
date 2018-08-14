@@ -9,17 +9,49 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class RestExceptionHandler {
 
 	@ExceptionHandler
-	public ResponseEntity<AuctionErrorResponse> handleException(UserDoesNotExistException exception) {
-		AuctionErrorResponse topicErrorResponse = new AuctionErrorResponse(
+	public ResponseEntity<ErrorResponse> handleException(UserDoesNotExistException exception) {
+		ErrorResponse errorResponse = new ErrorResponse(
 				exception.getMessage());
-		return new ResponseEntity<AuctionErrorResponse>(topicErrorResponse, HttpStatus.NOT_FOUND);
+		return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+	}
+
+
+	@ExceptionHandler
+	public ResponseEntity<ErrorResponse> handleException(AuctionDoesNotExistException exception) {
+		ErrorResponse errorResponse = new ErrorResponse(
+				exception.getMessage());
+		return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
 	}
 
 	@ExceptionHandler
-	public ResponseEntity<AuctionErrorResponse> handleException(Exception exception) {
-		AuctionErrorResponse topicErrorResponse = new AuctionErrorResponse(HttpStatus.BAD_REQUEST.toString(),
+	public ResponseEntity<ErrorResponse> handleException(AuctionAlreadyExistException exception) {
+		ErrorResponse errorResponse = new ErrorResponse(
 				exception.getMessage());
-		return new ResponseEntity<AuctionErrorResponse>(topicErrorResponse, HttpStatus.BAD_REQUEST);
+		return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+	}
+
+
+	@ExceptionHandler
+	public ResponseEntity<ErrorResponse> handleException(CarDoesNotExistException exception) {
+		ErrorResponse errorResponse = new ErrorResponse(
+				exception.getMessage());
+		return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+	}
+
+
+	@ExceptionHandler
+	public ResponseEntity<ErrorResponse> handleException(BidDoesNotExistException exception) {
+		ErrorResponse errorResponse = new ErrorResponse(
+				exception.getMessage());
+		return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+	}
+
+
+	@ExceptionHandler
+	public ResponseEntity<ErrorResponse> handleException(Exception exception) {
+		ErrorResponse errorResponse = new ErrorResponse(HttpStatus.BAD_REQUEST.toString(),
+				exception.getMessage());
+		return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
 	}
 
 }

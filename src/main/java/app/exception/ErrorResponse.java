@@ -1,11 +1,11 @@
 package app.exception;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
+public class ErrorResponse {
 
-public class AuctionErrorResponse {
-
-
+	@JsonIgnore
 	private String error;
 	private String cause;
 	public String getError() {
@@ -21,10 +21,10 @@ public class AuctionErrorResponse {
 		this.cause = cause;
 	}
 
-	public AuctionErrorResponse(String message){
+	public ErrorResponse(String message){
 		this.cause = message;
 	}
-	public AuctionErrorResponse(String error, String cause) {
+	public ErrorResponse(String error, String cause) {
 		super();
 		this.error = error;
 		this.cause = cause;
