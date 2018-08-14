@@ -3,10 +3,10 @@
 ## Solution
 The app uses spring boot and a h2 database.
 There are 4 endpoints:
-    users: to manage user
-    cars: to manage cars
-    bids: to manage the bids
-    auctions: to manage the auctions
+ - users: to manage user
+ - cars: to manage cars
+ - bids: to manage the bids
+ - auctions: to manage the auctions
 
 To run the app: simply import the project in Intellij and click run on AuctionApplication.
 
