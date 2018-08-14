@@ -9,7 +9,7 @@ public class Car extends Item {
         super(name, description);
     }
 
-    public Car(){
+    public Car() {
 
     }
 

@@ -29,7 +29,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class AuctionControllerTest {
 
 
-
     @Autowired
     private MockMvc mvc;
 
@@ -42,10 +41,10 @@ public class AuctionControllerTest {
     private List<Auction> mockAuctions;
 
     private String expectedJson = "{\"auctionId\":0,\"item\":{\"id\":0,\"name\":\"car1\",\"description\":\"super car\"},\"topBid\":null,\"reservePrice\":0.0}";
-    private Auction expectedAuction = new Auction(new Item("car1", "super car" ), 0);
+    private Auction expectedAuction = new Auction(new Item("car1", "super car"), 0);
 
     @Before
-    public void setUp(){
+    public void setUp() {
         mockAuctions = new ArrayList<>();
     }
 
@@ -54,7 +53,7 @@ public class AuctionControllerTest {
         Auction auction = new Auction(new Item("car1", "super car"), 0);
         mockAuctions.add(auction);
         Mockito.when(auctionService.getAllAuction()).thenReturn(mockAuctions);
-        String expect = "["+expectedJson+"]";
+        String expect = "[" + expectedJson + "]";
         mvc.perform(get("/auctions")).andExpect(status().isOk()).andExpect(content().string(expect));
     }
 
@@ -71,7 +70,6 @@ public class AuctionControllerTest {
         Mockito.when(auctionService.createAuction(Mockito.any(Item.class), Mockito.anyDouble())).thenReturn(expectedAuction);
         mvc.perform(post("/auctions").content(json).contentType(MediaType.APPLICATION_JSON)).andExpect(status().isCreated());
     }
-
 
 
 }

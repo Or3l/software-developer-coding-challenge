@@ -24,7 +24,7 @@ public class AuctionService implements IAuctionService {
     }
 
     @Override
-    public Auction createAuction(Item item, double reservePrice)  {
+    public Auction createAuction(Item item, double reservePrice) {
         if (item.getAuction() != null) {
             throw new AuctionAlreadyExistException("Auction already exist for that item");
         }

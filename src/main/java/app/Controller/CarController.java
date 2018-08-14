@@ -20,12 +20,12 @@ public class CarController {
     }
 
     @PostMapping
-    public ResponseEntity<Item> addCar(@RequestBody Car car){
+    public ResponseEntity<Item> addCar(@RequestBody Car car) {
         return new ResponseEntity<>(carService.saveCar(car), HttpStatus.CREATED);
     }
 
-    @GetMapping(value="/{id}")
-    public Item findCarByID(@PathVariable long id){
+    @GetMapping(value = "/{id}")
+    public Item findCarByID(@PathVariable long id) {
         return carService.findCarById(id);
     }
 }

@@ -31,7 +31,6 @@ public class UserControllerTest {
     private User mockUser = new User("user1", "user1");
 
 
-
     @Test
     public void findUserById_whenUserExist() throws Exception {
         User user = new User("test1", "test1");
@@ -40,12 +39,11 @@ public class UserControllerTest {
     }
 
     @Test
-    public void createUser() throws Exception{
+    public void createUser() throws Exception {
         String json = "{\"firstName\":\"test1\",\"lastName\":\"test1\"}";
         when(userService.saveUser(Mockito.any(User.class))).thenReturn(mockUser);
         mvc.perform(post("/users").content(json).contentType(MediaType.APPLICATION_JSON)).andExpect(status().isCreated());
     }
-
 
 
 }

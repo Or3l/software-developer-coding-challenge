@@ -34,15 +34,14 @@ public class AuctionController {
     }
 
     @GetMapping
-    public List<Auction> getAllAuction(){
+    public List<Auction> getAllAuction() {
         return auctionService.getAllAuction();
     }
 
     @GetMapping(value = "/{id}")
-    public Auction getAuction(@PathVariable long id){
+    public Auction getAuction(@PathVariable long id) {
         return auctionService.findAuctionBydId(id);
     }
-
 
 
 }

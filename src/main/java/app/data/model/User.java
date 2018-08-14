@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Entity
-@Table(name="user")
+@Table(name = "user")
 public class User {
 
     @Id
@@ -19,7 +19,6 @@ public class User {
             cascade = CascadeType.ALL
     )
     private Set<Bid> bids;
-
 
 
     public long getUserId() {
@@ -51,7 +50,7 @@ public class User {
         this.lastName = lastName;
     }
 
-    public User(){
+    public User() {
 
     }
 }

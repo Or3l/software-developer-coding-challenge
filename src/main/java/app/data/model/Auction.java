@@ -26,7 +26,7 @@ public class Auction {
     private List<Bid> bids;
 
     @OneToOne
-    @JoinColumn(name="top_bid")
+    @JoinColumn(name = "top_bid")
     private Bid topBid;
 
     private double reservePrice;
@@ -50,7 +50,8 @@ public class Auction {
         this.bids = new ArrayList<>();
     }
 
-    public Auction(){}
+    public Auction() {
+    }
 
     public Item getItem() {
         return item;
