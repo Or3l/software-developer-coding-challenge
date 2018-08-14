@@ -31,11 +31,9 @@ public class Auction {
 
     private double reservePrice;
 
-
     public boolean hasBids() {
         return (bids != null && bids.size() > 0);
     }
-
 
     @JsonManagedReference
     public Bid getTopBid() {
@@ -66,6 +64,9 @@ public class Auction {
         return bids;
     }
 
+    public void setBids(List<Bid> bids) {
+        this.bids = bids;
+    }
 
     public double getReservePrice() {
         return reservePrice;
