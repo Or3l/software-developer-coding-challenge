@@ -1,13 +1,12 @@
 package app.data.repository;
 
 import app.data.model.Auction;
-import app.data.model.AuctionImpl;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
-public interface AuctionRepository extends CrudRepository<AuctionImpl, Long> {
-    @Query()
-    Auction findByItemId(long itemId);
+public interface AuctionRepository extends CrudRepository<Auction, Long> {
+    Optional<Auction> findByItemId(long itemId);
 }
