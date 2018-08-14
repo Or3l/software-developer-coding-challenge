@@ -32,7 +32,7 @@ public class BidController {
     }
 
     @PostMapping
-    public ResponseEntity<Bid> placeBid(@RequestBody BidRequest bidRequest){
+    public ResponseEntity<Bid> placeBid(@RequestBody BidRequest bidRequest) {
         Auction auction = auctionService.findAuctionBydId(bidRequest.getAuctionId());
         User user = userService.findUserById(bidRequest.getUserId());
         Bid bid = new Bid(user, bidRequest.getAmount());
@@ -40,27 +40,25 @@ public class BidController {
     }
 
     @GetMapping("/{id}")
-    public Bid getBidById(@PathVariable int id){
+    public Bid getBidById(@PathVariable int id) {
         return bidService.findBidById(id);
     }
 
     @GetMapping
-    public List<Bid> findBidsForGivenItem(@RequestParam("itemId") long id){
-        Auction auction = auctionService.findAuctionByItem(id) ;
+    public List<Bid> findBidsForGivenItem(@RequestParam("itemId") long id) {
+        Auction auction = auctionService.findAuctionByItem(id);
         return auction.getBids();
     }
 
     @GetMapping("/winningBid")
-    public Bid findWinningBidForGivenItem(@RequestParam("itemId") long id){
-        Auction auction = auctionService.findAuctionByItem(id);
-        return auction.getTopBid();
+    public Bid findWinningBidForGivenItem(@RequestParam("itemId") long id) {
+        return bidService.findWinningBidForItem(id);
     }
 
     @GetMapping("/all")
-    public List<Bid> getAllBids(){
+    public List<Bid> getAllBids() {
         return bidService.getAllBids();
     }
-
 
 
 }

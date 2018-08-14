@@ -29,14 +29,14 @@ public class BidService implements IBidService {
 
     @Override
     public Bid createBid(Bid bid, Auction auction) {
-        if(Double.compare(bid.getAmount(), auction.getReservePrice()) < 0){
+        if (Double.compare(bid.getAmount(), auction.getReservePrice()) < 0) {
             throw new InsufficientAmountException("The amount is lesser than the reserve price");
         }
-        if(auction.getTopBid() == null){
+        if (auction.getTopBid() == null) {
             auction.setTopBid(bid);
             bid.setAuction(auction);
         } else {
-            if(Double.compare(bid.getAmount(), auction.getTopBid().getAmount()) <= 0){
+            if (Double.compare(bid.getAmount(), auction.getTopBid().getAmount()) <= 0) {
                 throw new InsufficientAmountException("The amount is lesser than the top bid");
             } else {
                 bid.setAuction(auction);
@@ -48,7 +48,7 @@ public class BidService implements IBidService {
 
     @Override
     public Bid findBidById(long id) {
-        return bidRepository.findById(id).orElseThrow(()-> new BidDoesNotExistException("This bid does not exist"));
+        return bidRepository.findById(id).orElseThrow(() -> new BidDoesNotExistException("This bid does not exist"));
     }
 
     @Override
@@ -57,5 +57,11 @@ public class BidService implements IBidService {
         List<Bid> result = new ArrayList<>();
         auctions.forEach(result::add);
         return result;
+    }
+
+    @Override
+    public Bid findWinningBidForItem(long id) {
+        Auction auction = auctionService.findAuctionByItem(id);
+        return auction.getTopBid();
     }
 }

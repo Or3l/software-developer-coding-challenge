@@ -8,6 +8,10 @@ import java.util.List;
 public interface IBidService {
 
     Bid createBid(Bid bid, Auction auction);
+
     Bid findBidById(long id);
+
     List<Bid> getAllBids();
+
+    Bid findWinningBidForItem(long id);
 }
