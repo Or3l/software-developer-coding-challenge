@@ -14,14 +14,18 @@ import java.util.List;
 @Service
 public class BidService implements IBidService {
 
-    @Autowired
     private BidRepository bidRepository;
 
-    @Autowired
     private IUserService userService;
 
-    @Autowired
     private IAuctionService auctionService;
+
+    @Autowired
+    public BidService(BidRepository bidRepository, IUserService userService, IAuctionService auctionService) {
+        this.bidRepository = bidRepository;
+        this.userService = userService;
+        this.auctionService = auctionService;
+    }
 
     @Override
     public Bid createBid(Bid bid, Auction auction) {
