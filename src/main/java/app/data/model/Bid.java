@@ -17,7 +17,7 @@ public class Bid implements Comparable<Bid> {
     private User user;
     private double amount;
 
-    @ManyToOne(targetEntity = AuctionImpl.class,fetch = FetchType.LAZY)
+    @ManyToOne(targetEntity = Auction.class,fetch = FetchType.LAZY)
     @JoinColumn(name = "auction_id")
     @JsonIgnore
     private Auction auction;

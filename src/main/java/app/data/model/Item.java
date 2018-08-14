@@ -16,7 +16,7 @@ public class Item {
     protected String description;
 
     @JsonIgnore
-    @OneToOne(fetch = FetchType.LAZY, targetEntity = AuctionImpl.class, cascade= CascadeType.ALL, mappedBy = "item")
+    @OneToOne(fetch = FetchType.LAZY, targetEntity = Auction.class, cascade= CascadeType.ALL, mappedBy = "item")
     protected Auction auction;
 
     public String getName() {
