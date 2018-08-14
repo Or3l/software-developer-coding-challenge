@@ -8,6 +8,8 @@ import app.service.IAuctionService;
 import app.service.IBidService;
 import app.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,28 +18,31 @@ import java.util.List;
 @RequestMapping("/bids")
 public class BidController {
 
-    @Autowired
     private IBidService bidService;
 
-    @Autowired
     private IUserService userService;
 
-    @Autowired
     private IAuctionService auctionService;
 
-    @PostMapping("")
-    public Bid placeBid(@RequestBody BidRequest bidRequest){
+    @Autowired
+    public BidController(IBidService bidService, IUserService userService, IAuctionService auctionService) {
+        this.bidService = bidService;
+        this.userService = userService;
+        this.auctionService = auctionService;
+    }
+
+    @PostMapping
+    public ResponseEntity<Bid> placeBid(@RequestBody BidRequest bidRequest){
         Auction auction = auctionService.findAuctionBydId(bidRequest.getAuctionId());
         User user = userService.findUserById(bidRequest.getUserId());
         Bid bid = new Bid(user, bidRequest.getAmount());
-        return bidService.createBid(bid, auction);
+        return new ResponseEntity<>(bidService.createBid(bid, auction), HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
     public Bid getBidById(@PathVariable int id){
         return bidService.findBidById(id);
     }
-
 
     @GetMapping
     public List<Bid> findBidsForGivenItem(@RequestParam("itemId") long id){
@@ -49,6 +54,11 @@ public class BidController {
     public Bid findWinningBidForGivenItem(@RequestParam("itemId") long id){
         Auction auction = auctionService.findAuctionByItem(id);
         return auction.getTopBid();
+    }
+
+    @GetMapping("/all")
+    public List<Bid> getAllBids(){
+        return bidService.getAllBids();
     }
 
 
