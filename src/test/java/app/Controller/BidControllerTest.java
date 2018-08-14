@@ -2,6 +2,7 @@ package app.Controller;
 
 import app.data.model.Auction;
 import app.data.model.Bid;
+import app.data.model.Item;
 import app.data.model.User;
 import app.service.IAuctionService;
 import app.service.IBidService;
@@ -43,13 +44,12 @@ public class BidControllerTest {
     private String expectedJson = "{\"bidId\":0,\"user\":{\"userId\":0,\"firstName\":\"user1\",\"lastName\":\"user1\"},\"amount\":10.0}";
 
     private List<Bid> mockBids = new ArrayList<>();
-
+    private Bid mockBid = new Bid(new User("user1", "user1"), 10);
 
 
     @Test
     public void getAllBids() throws Exception {
-        Bid bid = new Bid(new User("user1", "user1"), 10);
-        mockBids.add(bid);
+        mockBids.add(mockBid);
         Mockito.when(bidService.getAllBids()).thenReturn(mockBids);
         String expected = "["+expectedJson+"]";
         mvc.perform(get("/bids/all")).andExpect(status().isOk()).andExpect(content().string(expected));
@@ -63,8 +63,27 @@ public class BidControllerTest {
                 "\t\"auctionId\":1,\n" +
                 "\t\"amount\": 10\n" +
                 "}";
-        Bid bid = new Bid(new User("user1", "user1"), 10);
-        Mockito.when(bidService.createBid(Mockito.any(Bid.class), Mockito.any(Auction.class))).thenReturn(bid);
+        Mockito.when(bidService.createBid(Mockito.any(Bid.class), Mockito.any(Auction.class))).thenReturn(mockBid);
         mvc.perform(post("/bids").content(json).contentType(MediaType.APPLICATION_JSON)).andExpect(status().isCreated());
+    }
+
+    @Test
+    public void findBidsForItem() throws Exception{
+        Auction auction = new Auction(new Item("car1", "car"), 0);
+        mockBids.add(mockBid);
+        auction.setBids(mockBids);
+        Mockito.when(auctionService.findAuctionByItem(1)).thenReturn(auction);
+        String expected = "["+expectedJson+"]";
+        mvc.perform(get("/bids?itemId=1")).andExpect(status().isOk()).andExpect(content().string(expected));
+    }
+
+    @Test
+    public void findWinningBidForItem() throws Exception{
+        Auction auction = new Auction(new Item("car1", "car"), 0);
+        mockBids.add(mockBid);
+        auction.setBids(mockBids);
+        auction.setTopBid(mockBid);
+        Mockito.when(auctionService.findAuctionByItem(1)).thenReturn(auction);
+        mvc.perform(get("/bids/winningBid?itemId=1")).andExpect(status().isOk()).andExpect(content().string(expectedJson));
     }
 }
