@@ -20,6 +20,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -50,9 +51,9 @@ public class BidControllerTest {
     @Test
     public void getAllBids() throws Exception {
         mockBids.add(mockBid);
-        Mockito.when(bidService.getAllBids()).thenReturn(mockBids);
+        when(bidService.getAllBids()).thenReturn(mockBids);
         String expected = "[" + expectedJson + "]";
-        mvc.perform(get("/bids/all")).andExpect(status().isOk()).andExpect(content().string(expected));
+        mvc.perform(get("/bids")).andExpect(status().isOk()).andExpect(content().string(expected));
     }
 
     @Test
@@ -63,7 +64,7 @@ public class BidControllerTest {
                 "\t\"auctionId\":1,\n" +
                 "\t\"amount\": 10\n" +
                 "}";
-        Mockito.when(bidService.createBid(Mockito.any(Bid.class), Mockito.any(Auction.class))).thenReturn(mockBid);
+        when(bidService.createBid(Mockito.any(Bid.class), Mockito.any(Auction.class))).thenReturn(mockBid);
         mvc.perform(post("/bids").content(json).contentType(MediaType.APPLICATION_JSON)).andExpect(status().isCreated());
     }
 
@@ -72,14 +73,14 @@ public class BidControllerTest {
         Auction auction = new Auction(new Item("car1", "car"), 0);
         mockBids.add(mockBid);
         auction.setBids(mockBids);
-        Mockito.when(auctionService.findAuctionByItem(1)).thenReturn(auction);
+        when(auctionService.findAuctionByItem(1)).thenReturn(auction);
         String expected = "[" + expectedJson + "]";
-        mvc.perform(get("/bids?itemId=1")).andExpect(status().isOk()).andExpect(content().string(expected));
+        mvc.perform(get("/bids/item/1")).andExpect(status().isOk()).andExpect(content().string(expected));
     }
 
     @Test
     public void findWinningBidForItem() throws Exception {
-        Mockito.when(bidService.findWinningBidForItem(1)).thenReturn(mockBid);
-        mvc.perform(get("/bids/winningBid?itemId=1")).andExpect(status().isOk()).andExpect(content().string(expectedJson));
+        when(bidService.findWinningBidForItem(1)).thenReturn(mockBid);
+        mvc.perform(get("/bids/winning/1")).andExpect(status().isOk()).andExpect(content().string(expectedJson));
     }
 }

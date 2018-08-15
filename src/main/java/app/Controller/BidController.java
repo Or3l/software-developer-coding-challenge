@@ -45,18 +45,18 @@ public class BidController {
         return bidService.findBidById(id);
     }
 
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Bid> findBidsForGivenItem(@RequestParam("itemId") long id) {
+    @GetMapping(value = "/item/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<Bid> findBidsForGivenItem(@PathVariable long id) {
         Auction auction = auctionService.findAuctionByItem(id);
         return auction.getBids();
     }
 
-    @GetMapping(value = "/winningBid", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Bid findWinningBidForGivenItem(@RequestParam("itemId") long id) {
-        return bidService.findWinningBidForItem(id);
+    @GetMapping(value = "/winning/{itemId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Bid findWinningBidForGivenItem(@PathVariable long itemId) {
+        return bidService.findWinningBidForItem(itemId);
     }
 
-    @GetMapping(value = "/all",produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Bid> getAllBids() {
         return bidService.getAllBids();
     }
