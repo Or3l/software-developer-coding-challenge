@@ -7,6 +7,9 @@ import app.exception.CarDoesNotExistException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class ItemService implements IItemService {
 
@@ -27,5 +30,13 @@ public class ItemService implements IItemService {
     public Item findCarById(long id) {
         return itemRepository.findById(id).orElseThrow(() -> new CarDoesNotExistException("The car does not exist"));
 
+    }
+
+    @Override
+    public List<Item> getAllItem() {
+        Iterable<Item> items = itemRepository.findAll();
+        List<Item> result = new ArrayList<>();
+        items.forEach(result::add);
+        return result;
     }
 }

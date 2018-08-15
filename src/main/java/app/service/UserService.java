@@ -6,6 +6,9 @@ import app.exception.UserDoesNotExistException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class UserService implements IUserService {
 
@@ -23,5 +26,13 @@ public class UserService implements IUserService {
     public User findUserById(long id) {
         return userRepository.findById(id).orElseThrow(() -> new UserDoesNotExistException("User does not exist"));
 
+    }
+
+    @Override
+    public List<User> getAllUser() {
+        Iterable<User> users = userRepository.findAll();
+        List<User> result = new ArrayList<>();
+        users.forEach(result::add);
+        return result;
     }
 }

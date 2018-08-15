@@ -9,6 +9,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/cars")
 public class CarController {
@@ -28,5 +30,10 @@ public class CarController {
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public Item findCarByID(@PathVariable long id) {
         return carService.findCarById(id);
+    }
+
+    @GetMapping
+    public List<Item> getAllItem(){
+        return carService.getAllItem();
     }
 }
