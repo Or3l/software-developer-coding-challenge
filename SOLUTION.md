@@ -10,8 +10,8 @@ To run the app: simply import the project in Intellij and click run on AuctionAp
 
 Few rules to place a bid:
 - A bid can be placed on a item only if an auction has been opened.
-- A bid requires a user, so you need to create a user first
-- A bid requires a item, so you need to create a item first
+- An Auction requires a user, so you need to create a user first
+- An Auction requires a item, so you need to create a item first
 
 The postman collection:
 https://www.getpostman.com/collections/895124904802cab103bb
