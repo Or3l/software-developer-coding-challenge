@@ -7,6 +7,7 @@ import app.service.IAuctionService;
 import app.service.IItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,18 +28,18 @@ public class AuctionController {
         this.itemService = itemService;
     }
 
-    @PostMapping
+    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Auction> createAuction(@RequestBody AuctionRequest auctionRequest) {
         Item item = itemService.findCarById(auctionRequest.getItemId());
         return new ResponseEntity<>(auctionService.createAuction(item, auctionRequest.getReservePrice()), HttpStatus.CREATED);
     }
 
-    @GetMapping
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Auction> getAllAuction() {
         return auctionService.getAllAuction();
     }
 
-    @GetMapping(value = "/{id}")
+    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public Auction getAuction(@PathVariable long id) {
         return auctionService.findAuctionBydId(id);
     }
