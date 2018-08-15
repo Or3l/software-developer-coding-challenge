@@ -16,14 +16,11 @@ public class BidService implements IBidService {
 
     private BidRepository bidRepository;
 
-    private IUserService userService;
-
     private IAuctionService auctionService;
 
     @Autowired
-    public BidService(BidRepository bidRepository, IUserService userService, IAuctionService auctionService) {
+    public BidService(BidRepository bidRepository, IAuctionService auctionService) {
         this.bidRepository = bidRepository;
-        this.userService = userService;
         this.auctionService = auctionService;
     }
 
