@@ -18,6 +18,9 @@ Few rules to place a bid:
 The postman collection:
 https://www.getpostman.com/collections/895124904802cab103bb
 
+The swagger ui:
+http://localhost:8080/swagger-ui.html
+
 
 
 
